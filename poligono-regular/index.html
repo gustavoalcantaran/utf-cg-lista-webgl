@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR" style="background-color: lightblue;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exemplo: Hello World (organizado)</title>
+  <link rel="stylesheet" href="../utils/styling/example.css">
+  <script src="../utils/code/errors.js"></script>
+</head>
+<body>
+  <h1>Polígono Regular</h1>
+  <p>Só aperta + pra aumentar o número de lados e - para diminuir aí mano...</p>
+  <canvas class="example-canvas shadow" width="500" height="500"></canvas>
+  <script type="shader/vertex">
+    #version 300 es
+
+    in vec2 posicao;
+    uniform mat4 projecao;
+
+    void main() {
+        gl_Position = projecao * vec4(posicao, 0.0, 1.0);
+        gl_PointSize = 10.0;
+    }
+  </script>
+  <script type="shader/fragment">
+    #version 300 es
+
+    precision highp float;
+    uniform vec4 uColor;
+    out vec4 outColor;
+
+    void main() {
+        outColor = uColor;
+    }
+  </script>
+  <script type="module">
+    import { setupWebGL, initialize, render } from './main.js';
+    
+    const gl = setupWebGL();
+    initialize(gl);
+    render(gl);
+
+  </script>
+</body>
+</html>
