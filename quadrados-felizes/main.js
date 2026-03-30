@@ -72,7 +72,7 @@ export function initialize(gl) {
     gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
 
     const projectionUniformLocation = gl.getUniformLocation(cena.program, 'projecao');
-    const projectionMatrix = ortho(0, 200, 0, 200, -1, 1);
+    const projectionMatrix = ortho(0, 1000, 0, 1000, -1, 1);
     gl.uniformMatrix4fv(projectionUniformLocation, false, projectionMatrix);
 
     cena.colorLoc = gl.getUniformLocation(cena.program, 'uColor');
