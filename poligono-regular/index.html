@@ -1,15 +1,20 @@
 <!DOCTYPE html>
-<html lang="pt-BR" style="background-color: lightblue;">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Exemplo: Hello World (organizado)</title>
-  <link rel="stylesheet" href="../utils/styling/example.css">
+  <title>Polígono Regular</title>
+  <link rel="stylesheet" href="estilos.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
   <script src="../utils/code/errors.js"></script>
 </head>
 <body>
-  <h1>Polígono Regular</h1>
-  <p>Aperte + para aumentar o número de lados e - para diminuir</p>
+  <div>
+    <h1>Polígono Regular</h1>
+    <p>Aperte + para aumentar o número de lados e - para diminuir.</p>
+    <p>Lados atuais: <strong id="valor-lados">3</strong></p>
+    <a href="/">Voltar à Pagina Inicial</a>
+  </div>
   <canvas class="example-canvas shadow" width="500" height="500"></canvas>
   <script type="shader/vertex">
     #version 300 es

@@ -2,7 +2,6 @@ import { createProgram, createShader } from './gl-utils.js';
 
 const cena = {
   program: null,
-  quadVao: null,
   colorLoc: null
 };
 
@@ -15,7 +14,8 @@ const cores = [
   [1.0, 0.0, 1.0, 1.0], // magenta
   [0.0, 1.0, 1.0, 1.0], // ciano
   [0.6, 0.6, 0.6, 1.0],  // cinza
-  [1.0, 1.0, 1.0, 1.0]  // branco
+  [1.0, 0.5, 0.0, 1.0]  // laranja - Era pra ser branco, mas como o fundo é branco, coloquei outra cor
+                        //Pensei em colocar o fundo de outra cor, mas ia ficar zuado por conta dos outros exercícios.
 ]
 
 export function setupWebGL() {
@@ -54,7 +54,6 @@ export function initialize(gl) {
     gl.bindBuffer(gl.ARRAY_BUFFER, quadVbo);
 
     const vertices = [];
-    // define os vértices de um triângulo
     for (let i = 0; i < 9; i++){
       const coluna = i % 3;
       const linha = Math.floor(i / 3);
@@ -72,11 +71,11 @@ export function initialize(gl) {
     gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
 
     const projectionUniformLocation = gl.getUniformLocation(cena.program, 'projecao');
-    const projectionMatrix = ortho(0, 1000, 0, 1000, -1, 1);
+    const projectionMatrix = ortho(0, 200, 0, 200, -1, 1);
     gl.uniformMatrix4fv(projectionUniformLocation, false, projectionMatrix);
 
     cena.colorLoc = gl.getUniformLocation(cena.program, 'uColor');
-    gl.clearColor(0.6, 0.7, 1.0, 1.0); // fundo meio-azul puxado para o roxo, coloquei para ver a cor branca
+    gl.clearColor(1.0, 1.0, 1.0, 1.0);
     // --- fim do código de configuração ---
 }
 

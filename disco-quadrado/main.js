@@ -2,20 +2,20 @@ import { createProgram, createShader } from './gl-utils.js';
 
 const cena = {
   program: null,
-  quadVao: null,
-  colorLoc: null,
-  quadMVao : null
-};
-
-const objetos = {
-
+  colorLoc: null
 };
 
 let tri_Strip = false;
-
+const mostrandoLinhasEl = document.getElementById('mostrando-linhas');
+function atualizarMostrandoLinhasUI(){
+  if (mostrandoLinhasEl){
+    mostrandoLinhasEl.textContent = tri_Strip ? "Sim" : "Não";
+  }
+}
 window.addEventListener('keydown', (event) => {
   if (event.key.toLowerCase() === 'c'){
     tri_Strip = !tri_Strip;
+    atualizarMostrandoLinhasUI()
   }
 });  
 
@@ -117,6 +117,7 @@ export function initialize(gl) {
 
     cena.colorLoc = gl.getUniformLocation(cena.program, 'uColor');
     gl.clearColor(1.0, 1.0, 1.0, 1.0);
+    atualizarMostrandoLinhasUI()
     // --- fim do código de configuração ---
 }
 
@@ -142,7 +143,6 @@ export function render(gl) {
     /*for (let i = 0; i < 20; i++){
       gl.drawArrays(gl.POINTS, i, 1);
       }*/
-    const tri_StripLoc = gl.getUniformLocation(cena.program, "u_tri_Strip");
     if (tri_Strip){
       gl.bindVertexArray(cena.diskQuadVao);
       gl.uniform4f(cena.colorLoc, 0.0,0.0, 0.0, 1.0);
@@ -156,7 +156,4 @@ export function render(gl) {
       gl.drawArrays(gl.LINE_LOOP, 0, 4);
     }
     requestAnimationFrame(() => render(gl));
-     /*for (let i = 0; i < 7; i += 2){
-      gl.drawArrays(gl.LINE_STRIP, i, (i+2)%6);
-     }*/
 }

@@ -2,11 +2,17 @@ import { createProgram, createShader } from './gl-utils.js';
 
 const cena = {
   program: null,
-  quadVao: null,
   colorLoc: null
 };
 
 let numLados = 3;
+const valorLadosEl = document.getElementById('valor-lados');
+
+function atualizarNumeroLadosUI() {
+  if (valorLadosEl) {
+    valorLadosEl.textContent = String(numLados);
+  }
+}
 
 window.addEventListener('keydown', (event) =>{
   if (event.key === '+'){
@@ -15,6 +21,7 @@ window.addEventListener('keydown', (event) =>{
   if (event.key === '-' && numLados > 3){
     numLados--;
   }
+  atualizarNumeroLadosUI();
 });
 
 function calcularVertices(gl) {
@@ -29,7 +36,6 @@ function calcularVertices(gl) {
   }
   gl.bindBuffer(gl.ARRAY_BUFFER, cena.poligonoVbo);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.DYNAMIC_DRAW);
-  return 0;
 }
 
 
@@ -81,7 +87,7 @@ export function initialize(gl) {
     gl.uniformMatrix4fv(projectionUniformLocation, false, projectionMatrix);
 
     cena.colorLoc = gl.getUniformLocation(cena.program, 'uColor');
-    gl.clearColor(1.0, 1.0, 1.0, 1.0); // fundo meio-azul puxado para o roxo, coloquei para ver a cor branca
+    gl.clearColor(1.0, 1.0, 1.0, 1.0);
     // --- fim do código de configuração ---
 }
 
@@ -105,5 +111,7 @@ export function render(gl) {
     calcularVertices(gl);
     gl.uniform4f(cena.colorLoc, 0.0, 0.0, 0.0, 1.0); // preto
     gl.drawArrays(gl.LINE_LOOP, 0, numLados);
+    gl.uniform4f(cena.colorLoc, 0.0, 0.0, 1.0, 1.0); // azul
+    gl.drawArrays(gl.TRIANGLE_FAN, 0, numLados);
     requestAnimationFrame(() => render(gl));
 }
